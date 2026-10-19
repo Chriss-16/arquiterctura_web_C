@@ -1,35 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Datos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1020">
+    <meta name="description" content="Descubre la arquitectura desacoplada: cómo se conectan el frontend y el backend mediante APIs, sus ventajas y un quiz interactivo.">
+    <title>Arquitectura desacoplada | Una guía interactiva</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header class="site-header">
+        <nav class="container nav-wrap" aria-label="Navegación principal">
+            <a class="brand" href="#inicio" aria-label="Arquitectura desacoplada, inicio">
+                <span class="brand-mark" aria-hidden="true">⟷</span>
+                <span>Decoupled<span class="brand-dot">.</span></span>
+            </a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menú</button>
+            <div class="nav-links" id="nav-links">
+                <a href="#concepto">Concepto</a>
+                <a href="#ventajas">Ventajas</a>
+                <a href="#video">Video</a>
+                <a href="#quiz">Quiz</a>
+                <a href="#autor">Autor</a>
+            </div>
+        </nav>
+    </header>
 
-    <br>
+    <main>
+        <section class="hero" id="inicio">
+            <div class="container hero-grid">
+                <div>
+                    <span class="eyebrow">Una arquitectura. Más posibilidades.</span>
+                    <h1>Frontend y backend, <span>libres para evolucionar.</span></h1>
+                    <p class="hero-copy">La arquitectura desacoplada separa la experiencia que ve el usuario de los servicios que la hacen posible. Ambos se conectan mediante APIs: menos dependencias, más opciones.</p>
+                    <div class="actions">
+                        <a class="button" href="#concepto">Explorar el concepto <span aria-hidden="true">&nbsp;→</span></a>
+                        <a class="button button-secondary" href="#quiz">Ponerme a prueba</a>
+                    </div>
+                </div>
+                <div class="architecture-card" role="img" aria-label="Diagrama: el frontend se comunica con el backend mediante una API y entrega contenido a varios canales">
+                    <p class="diagram-label">Una conexión, diferentes experiencias</p>
+                    <div class="diagram-stack">
+                        <div class="diagram-node">
+                            <span class="node-icon" aria-hidden="true">◈</span>
+                            <span><strong>Frontend</strong><small>Interfaz y experiencia de usuario</small></span>
+                        </div>
+                        <div class="connector">solicitudes y respuestas</div>
+                        <div class="diagram-node api-node">
+                            <span class="node-icon" aria-hidden="true">⟷</span>
+                            <span><strong>API</strong><small>El puente entre las dos capas</small></span>
+                        </div>
+                        <div class="connector">datos y servicios</div>
+                        <div class="diagram-node">
+                            <span class="node-icon" aria-hidden="true">▤</span>
+                            <span><strong>Backend</strong><small>Contenido, reglas y datos</small></span>
+                        </div>
+                        <div class="channels" aria-label="Canales de publicación">
+                            <span class="channel">Web</span><span class="channel">Móvil</span><span class="channel">Otros canales</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <img src="img/perrin.jpg" alt="Foto pro" width="150">
+        <section id="concepto">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">01 / El concepto</span>
+                    <h2>¿Qué significa estar desacoplado?</h2>
+                    <p>En una arquitectura tradicional, la presentación y la lógica del servidor suelen estar estrechamente conectadas. Al desacoplarlas, cada capa puede desarrollarse y desplegarse de forma independiente.</p>
+                </div>
+                <div class="intro-grid">
+                    <article class="info-card">
+                        <span class="card-icon" aria-hidden="true">◉</span>
+                        <h3>Frontend independiente</h3>
+                        <p>La capa de presentación construye la interfaz y solicita información cuando la necesita. Puede adaptarse a distintos dispositivos y evolucionar sin rehacer el backend.</p>
+                    </article>
+                    <article class="info-card">
+                        <span class="card-icon" aria-hidden="true">⌘</span>
+                        <h3>Backend conectado por APIs</h3>
+                        <p>El backend gestiona datos, contenido y reglas de negocio; expone servicios mediante APIs para que uno o varios clientes puedan consumirlos.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-    <br>
+        <section id="ventajas">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">02 / ¿Por qué elegirla?</span>
+                    <h2>Ventajas de separar las capas</h2>
+                    <p>Al definir responsabilidades claras y una comunicación basada en APIs, los equipos ganan flexibilidad sin perder de vista la coordinación.</p>
+                </div>
+                <div class="benefit-grid">
+                    <article class="benefit-card">
+                        <span class="card-icon" aria-hidden="true">↗</span>
+                        <h3>Escalabilidad</h3>
+                        <p>Escala cada parte según sus necesidades, sin replicar toda la aplicación.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <span class="card-icon" aria-hidden="true">⌘</span>
+                        <h3>Flexibilidad tecnológica</h3>
+                        <p>Elige herramientas distintas para la interfaz y los servicios del servidor.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <span class="card-icon" aria-hidden="true">▣</span>
+                        <h3>Omnicanalidad</h3>
+                        <p>Un mismo backend puede entregar contenido a la web, una app móvil y más canales.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <span class="card-icon" aria-hidden="true">⚡</span>
+                        <h3>Desarrollo en paralelo</h3>
+                        <p>Los equipos pueden avanzar de manera independiente si acuerdan los contratos de API.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <span class="card-icon" aria-hidden="true">⟳</span>
+                        <h3>Mantenimiento</h3>
+                        <p>Los cambios localizados son más sencillos cuando las responsabilidades están separadas.</p>
+                    </article>
+                    <article class="benefit-card">
+                        <span class="card-icon" aria-hidden="true">◇</span>
+                        <h3>Experiencias a medida</h3>
+                        <p>Diseña interfaces distintas para cada audiencia sin duplicar la gestión de datos.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-    <table border="1">
-        <tr>
-            <td>Nombre</td>
-            <td>Christian</td>
-        </tr>
-        <tr>
-            <td>Apellido</td>
-            <td>Serrano</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>criserrano443@gmail.com</td>
-        </tr>
-        <tr>
-            <td>Dirección</td>
-            <td>Cotopaxi</td>
-        </tr>
-        <tr>
-            <td>Acerca de mí</td>
-            <td>Estudiante de Ingenieria de Software, amante de los videojuegos</td>
-        </tr>
-    </table>
+        <section class="video-section" id="video">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">03 / Aprende en video</span>
+                    <h2>La arquitectura, en contexto</h2>
+                    <p>Refuerza el concepto con una explicación audiovisual sobre cómo colaboran las APIs, el frontend y el backend.</p>
+                </div>
+                <div class="video-frame">
+                    <div class="video-placeholder">
+                        <span class="play-icon" aria-hidden="true">▶</span>
+                        <h3>Video explicativo</h3>
+                        <p>El reproductor adaptable está listo para integrar el video del proyecto. Cuando tengas el enlace, sustituye este bloque por un <code>&lt;iframe&gt;</code> de YouTube o un elemento <code>&lt;video&gt;</code>.</p>
+                        <a href="https://www.youtube.com/results?search_query=arquitectura+desacoplada+headless" target="_blank" rel="noopener noreferrer">Explorar videos sobre arquitectura desacoplada ↗</a>
+                    </div>
+                </div>
+                <p class="video-note">El video original no está incluido en los archivos disponibles del proyecto.</p>
+            </div>
+        </section>
 
+        <section id="quiz">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">04 / Comprueba lo aprendido</span>
+                    <h2>Quiz de arquitectura desacoplada</h2>
+                    <p>Responde cinco preguntas para revisar las ideas clave. Recibirás retroalimentación después de cada respuesta.</p>
+                </div>
+                <div class="quiz-shell" id="quiz-app" aria-live="polite">
+                    <div class="quiz-topline">
+                        <span id="question-count">Pregunta 1 de 5</span>
+                        <span id="score-label">Puntaje: 0</span>
+                    </div>
+                    <div class="progress-track" role="progressbar" aria-label="Progreso del cuestionario" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div id="quiz-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="autor">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">05 / Créditos</span>
+                    <h2>Sobre el autor</h2>
+                </div>
+                <div class="author-card">
+                    <div class="author-avatar" aria-hidden="true">CS</div>
+                    <div>
+                        <h3>Christian Serrano</h3>
+                        <p><strong>Autor:</strong> Christian Serrano</p>
+                        <p><strong>Institución:</strong> Universidad Técnica de Cotopaxi (UTC)</p>
+                        <div class="author-meta">
+                            <span><strong>Carrera:</strong> Ingeniería de Software</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-inner">
+            <span>Arquitectura desacoplada · Guía interactiva</span>
+            <span>Christian Serrano · Universidad Técnica de Cotopaxi</span>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
 </body>
+</html>
