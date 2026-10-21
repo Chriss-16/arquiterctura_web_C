@@ -3,167 +3,443 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Información Personal y Arquitectura Desacoplada</title>
+    <meta name="theme-color" content="#050505">
+    <meta name="description" content="Perfil de Christian Serrano y guía sobre arquitectura desacoplada con video y evaluación interactiva.">
+    <title>Christian Serrano | Arquitectura Desacoplada</title>
     <style>
         :root {
             color-scheme: dark;
-            --background: #050505;
-            --surface: #101010;
-            --text: #f7f7f7;
-            --muted: #c2c2c2;
-            --line: #454545;
-            --glow: 0 0 8px rgba(255, 255, 255, .55);
+            --bg: #050505;
+            --surface: #0c0c0c;
+            --surface-raised: #121212;
+            --text: #f6f6f6;
+            --muted: #b8b8b8;
+            --line: #383838;
+            --white-line: #858585;
+            --glow: 0 0 18px rgba(255, 255, 255, .16);
+            --content-width: 1120px;
         }
 
-        * { box-sizing: border-box; }
-
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 92px; }
         body {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 48px 24px;
-            background: var(--background);
+            margin: 0;
+            background-color: var(--bg);
+            background-image: linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+            background-size: 44px 44px;
             color: var(--text);
             font-family: "Avenir Next", "Segoe UI", sans-serif;
             line-height: 1.65;
         }
 
-        h2, h3 {
-            color: #fff;
-            text-shadow: var(--glow);
+        a { color: inherit; }
+        button, input { font: inherit; }
+        button { color: inherit; }
+        .wrap { width: min(var(--content-width), calc(100% - 48px)); margin-inline: auto; }
+        .topbar {
+            position: sticky;
+            z-index: 10;
+            top: 0;
+            border-bottom: 1px solid var(--line);
+            background: rgba(5, 5, 5, .92);
+            backdrop-filter: blur(14px);
         }
-
-        body > h2:first-child {
-            margin-bottom: 24px;
-            font-size: 2rem;
+        .nav-inner {
+            display: flex;
+            min-height: 68px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
         }
-
-        img {
-            display: block;
-            width: 150px;
-            height: 150px;
-            margin-bottom: 28px;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 16px rgba(255, 255, 255, .3);
-            object-fit: cover;
+        .wordmark { flex: 0 0 auto; font-size: .8rem; font-weight: 750; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+        .wordmark span { color: var(--muted); font-weight: 450; }
+        .nav-links { display: flex; align-items: center; gap: 8px; }
+        .nav-links a {
+            padding: 8px 11px;
+            border: 1px solid transparent;
+            color: var(--muted);
+            font-size: .83rem;
+            text-decoration: none;
+            transition: color .2s ease, border-color .2s ease, box-shadow .2s ease;
         }
-
-        table {
-            width: 100%;
-            border: 1px solid var(--line);
-            border-collapse: collapse;
-            background: var(--surface);
-        }
-
-        th, td {
-            padding: 12px 14px;
-            border: 1px solid var(--line);
-            text-align: left;
-            vertical-align: top;
-        }
-
-        th { width: 28%; color: #fff; }
-        td { color: var(--muted); }
-
-        section {
-            margin-top: 40px;
-            padding: 22px 24px;
-            border: 1px solid var(--line);
-            border-left: 3px solid #fff;
-            border-radius: 4px;
-            background: var(--surface);
-        }
-
-        section h2 { margin-top: 0; }
-        li::marker { color: #fff; }
-
-        video {
-            display: block;
-            max-width: 100%;
-            border: 1px solid #fff;
-            border-radius: 4px;
-            box-shadow: 0 0 14px rgba(255, 255, 255, .2);
-        }
-
-        fieldset {
-            margin: 16px 0;
-            padding: 16px;
-            border: 1px solid var(--line);
-            border-radius: 4px;
-        }
-
-        legend { padding: 0 6px; color: #fff; }
-        label { display: inline-block; padding: 5px 0; color: var(--muted); cursor: pointer; }
-        input[type="radio"] { accent-color: #fff; }
+        .nav-links a:hover, .nav-links a:focus-visible { border-color: var(--white-line); color: #fff; box-shadow: var(--glow); }
         :focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+        main { overflow: clip; }
+        .module { padding: 84px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 68px; }
+        .module:first-child { padding-top: 82px; }
+        .section-kicker { margin: 0 0 11px; color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+        h1, h2, h3, p { margin-top: 0; }
+        h1, h2 { text-shadow: 0 0 20px rgba(255, 255, 255, .23); }
+        h1 { max-width: 720px; margin-bottom: 18px; font-size: 3.2rem; line-height: 1.08; }
+        h2 { margin-bottom: 14px; font-size: 2.2rem; line-height: 1.15; }
+        h3 { font-size: 1.08rem; }
+        .lead { max-width: 720px; color: var(--muted); font-size: 1.08rem; }
+        .title-rule { display: block; width: 74px; height: 2px; margin: 22px 0 30px; background: #fff; box-shadow: 0 0 12px rgba(255, 255, 255, .7); }
 
+        .profile-grid { display: grid; grid-template-columns: 220px minmax(0, 1fr); align-items: start; gap: 48px; }
+        .portrait-frame { width: 200px; aspect-ratio: 1; padding: 5px; border: 1px solid var(--white-line); border-radius: 50%; box-shadow: 0 0 24px rgba(255, 255, 255, .14); }
+        .portrait-frame img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .profile-copy h1 { margin-top: 0; }
+        .profile-copy .lead { margin-bottom: 26px; }
+        .data-table, .compare-table { width: 100%; border-collapse: collapse; background: rgba(12, 12, 12, .88); }
+        .data-table th, .data-table td, .compare-table th, .compare-table td { padding: 13px 16px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+        .data-table th { width: 28%; color: #fff; font-size: .88rem; }
+        .data-table td { color: var(--muted); overflow-wrap: anywhere; }
+        .module-heading { max-width: 780px; margin-bottom: 34px; }
+        .module-heading h2 { margin-bottom: 16px; }
+        .module-heading > p:last-child { margin-bottom: 0; color: var(--muted); }
+        .definition {
+            margin: 0 0 30px;
+            padding: 22px 24px;
+            border: 1px solid var(--white-line);
+            border-left: 3px solid #fff;
+            background: linear-gradient(100deg, rgba(255, 255, 255, .065), rgba(255, 255, 255, .015));
+            box-shadow: var(--glow);
+        }
+        .definition strong { color: #fff; }
+        .flow { display: grid; grid-template-columns: 1fr 110px 1fr; align-items: stretch; gap: 18px; margin: 30px 0 42px; }
+        .flow-node { padding: 20px; border: 1px solid var(--line); background: var(--surface); }
+        .flow-node h3 { margin-bottom: 6px; }
+        .flow-node p { margin-bottom: 0; color: var(--muted); font-size: .91rem; }
+        .flow-link { display: grid; align-content: center; justify-items: center; color: var(--muted); font-size: .75rem; text-align: center; }
+        .flow-link::before { width: 100%; height: 1px; margin-bottom: 9px; background: #fff; box-shadow: 0 0 10px rgba(255, 255, 255, .7); content: ""; }
+        .flow-link strong { color: #fff; font-size: .8rem; }
+        .benefit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+        .benefit { min-height: 176px; padding: 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(12, 12, 12, .7); transition: background .2s ease, box-shadow .2s ease; }
+        .benefit:hover { background: #111; box-shadow: inset 0 0 24px rgba(255, 255, 255, .035); }
+        .benefit-index { display: block; margin-bottom: 15px; color: var(--muted); font-size: .7rem; letter-spacing: .13em; }
+        .benefit h3 { margin-bottom: 8px; }
+        .benefit p { margin-bottom: 0; color: var(--muted); font-size: .9rem; }
+        .comparison { margin-top: 42px; }
+        .comparison h3 { margin-bottom: 14px; }
+        .compare-table th { color: #fff; }
+        .compare-table td { color: var(--muted); }
+        .video-shell { max-width: 900px; padding: 7px; border: 1px solid var(--white-line); background: #090909; box-shadow: 0 0 28px rgba(255, 255, 255, .12); }
+        .video-shell video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; object-fit: contain; }
+        .video-caption { margin: 14px 0 0; color: var(--muted); font-size: .85rem; }
+
+        .quiz-intro { max-width: 720px; color: var(--muted); }
+        .quiz-topline { display: flex; justify-content: space-between; gap: 16px; margin: 28px 0 10px; color: var(--muted); font-size: .8rem; }
+        .progress-track { height: 3px; margin-bottom: 30px; background: #292929; }
+        .progress-value { width: 0; height: 100%; background: #fff; box-shadow: 0 0 10px #fff; transition: width .25s ease; }
+        .quiz-question { margin: 0 0 22px; padding: 22px; border: 1px solid var(--line); background: rgba(12, 12, 12, .94); }
+        .question-meta { margin-bottom: 8px; color: var(--muted); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; }
+        .quiz-question h3 { margin-bottom: 18px; line-height: 1.45; }
+        .answer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .answer-option { position: relative; display: flex; min-height: 58px; align-items: center; gap: 11px; padding: 11px 13px; border: 1px solid var(--line); background: #080808; color: var(--muted); cursor: pointer; transition: border-color .18s ease, color .18s ease, box-shadow .18s ease; }
+        .answer-option:hover { border-color: var(--white-line); color: #fff; }
+        .answer-option:has(input:checked) { border-color: #fff; color: #fff; box-shadow: inset 0 0 15px rgba(255, 255, 255, .05), 0 0 10px rgba(255, 255, 255, .09); }
+        .answer-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+        .answer-option:has(input:focus-visible) { outline: 2px solid #fff; outline-offset: 3px; }
+        .answer-letter { display: grid; width: 26px; height: 26px; flex: 0 0 auto; place-items: center; border: 1px solid #555; color: #fff; font-size: .75rem; font-weight: 700; }
+        .answer-option:has(input:checked) .answer-letter { border-color: #fff; box-shadow: 0 0 9px rgba(255, 255, 255, .4); }
+        .answer-option.is-correct { border-color: #fff; color: #fff; box-shadow: 0 0 12px rgba(255, 255, 255, .16); }
+        .answer-option.is-incorrect { border-color: #888; color: #aaa; }
+        .question-feedback { display: none; margin: 14px 0 0; color: var(--muted); font-size: .88rem; }
+        .question-feedback.visible { display: block; }
+        .quiz-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 24px; }
+        .button { min-height: 46px; padding: 0 18px; border: 1px solid #fff; background: #fff; color: #050505; font-weight: 750; cursor: pointer; transition: box-shadow .2s ease, background .2s ease; }
+        .button:hover { background: #e4e4e4; box-shadow: 0 0 18px rgba(255, 255, 255, .35); }
+        .button-secondary { background: transparent; color: #fff; }
+        .button-secondary:hover { background: #161616; }
+        .quiz-result { min-height: 28px; color: var(--muted); }
+        .quiz-result strong { color: #fff; }
+        footer { padding: 26px 0 36px; color: var(--muted); font-size: .78rem; }
+        .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+
+        @media (max-width: 760px) {
+            .nav-inner { align-items: flex-start; flex-direction: column; gap: 7px; padding: 14px 0 10px; }
+            .nav-links { width: 100%; gap: 4px; overflow-x: auto; padding-bottom: 3px; }
+            .nav-links a { flex: 0 0 auto; padding: 7px 9px; font-size: .76rem; }
+            .profile-grid { grid-template-columns: 150px minmax(0, 1fr); gap: 25px; }
+            .portrait-frame { width: 145px; }
+            h1 { font-size: 2.65rem; }
+            h2 { font-size: 1.9rem; }
+            .module { padding: 64px 0; }
+        }
         @media (max-width: 560px) {
-            body { padding: 30px 16px; }
-            th, td { padding: 10px; }
-            th { width: 35%; }
-            section { padding: 18px; }
+            .wrap { width: min(100% - 32px, var(--content-width)); }
+            .profile-grid { grid-template-columns: 1fr; gap: 24px; }
+            .portrait-frame { width: 132px; }
+            h1 { font-size: 2.35rem; }
+            h2 { font-size: 1.75rem; }
+            .module:first-child { padding-top: 52px; }
+            .flow { grid-template-columns: 1fr; gap: 10px; }
+            .flow-link { padding: 5px; }
+            .flow-link::before { width: 1px; height: 20px; margin: 0 0 7px; }
+            .benefit-grid, .answer-grid { grid-template-columns: 1fr; }
+            .benefit { min-height: auto; }
+            .data-table th, .data-table td, .compare-table th, .compare-table td { padding: 10px; font-size: .84rem; }
+            .data-table th { width: 34%; }
+            .quiz-question { padding: 16px; }
+            .quiz-topline { align-items: flex-start; flex-direction: column; gap: 3px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
         }
     </style>
 </head>
 <body>
-    <h2>Información Personal</h2>
-    <img src="img/perrin.jpg" alt="Foto de perfil">
+    <header class="topbar">
+        <nav class="nav-inner wrap" aria-label="Navegación principal">
+            <a class="wordmark" href="#perfil">CS <span>/ Arquitectura</span></a>
+            <div class="nav-links">
+                <a href="#perfil">Perfil</a>
+                <a href="#arquitectura">Arquitectura Desacoplada</a>
+                <a href="#video">Video Explicativo</a>
+                <a href="#quiz">Quiz Interactivo</a>
+            </div>
+        </nav>
+    </header>
 
-    <table border="1">
-        <tr>
-            <th>Nombre</th>
-            <td>Christian</td>
-        </tr>
-        <tr>
-            <th>Apellido</th>
-            <td>Serrano</td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td>criserrano443@gmail.com</td>
-        </tr>
-        <tr>
-            <th>Dirección</th>
-            <td>Cotopaxi</td>
-        </tr>
-        <tr>
-            <th>Acerca de mí</th>
-            <td>Estudiante de Ingeniería de Software, amante de los videojuegos.</td>
-        </tr>
-    </table>
+    <main>
+        <section class="module wrap" id="perfil" aria-labelledby="profile-title">
+            <div class="profile-grid">
+                <div class="portrait-frame">
+                    <img src="img/perrin.jpg" alt="Foto de perfil de Christian Serrano">
+                </div>
+                <div class="profile-copy">
+                    <p class="section-kicker">Perfil / Ingeniería de Software</p>
+                    <h1 id="profile-title">Información Personal</h1>
+                    <p class="lead">Estudiante de Ingeniería de Software y amante de los videojuegos.</p>
+                    <table class="data-table">
+                        <tbody>
+                            <tr><th scope="row">Nombre</th><td>Christian</td></tr>
+                            <tr><th scope="row">Apellido</th><td>Serrano</td></tr>
+                            <tr><th scope="row">Email</th><td><a href="mailto:criserrano443@gmail.com">criserrano443@gmail.com</a></td></tr>
+                            <tr><th scope="row">Dirección</th><td>Cotopaxi</td></tr>
+                            <tr><th scope="row">Acerca de mí</th><td>Estudiante de Ingeniería de Software, amante de los videojuegos.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <section>
-        <h2>Arquitectura Desacoplada</h2>
-        <p><strong>Definición:</strong> Separación completa entre el Frontend (la interfaz de usuario) y el Backend (la lógica de servidor y base de datos), comunicándose mediante APIs.</p>
-        <p><strong>Ventajas principales:</strong></p>
-        <ul>
-            <li>Mayor escalabilidad</li>
-            <li>Independencia en el despliegue</li>
-            <li>Flexibilidad tecnológica</li>
-            <li>Mejor rendimiento</li>
-        </ul>
-    </section>
+        <section class="module" id="arquitectura" aria-labelledby="architecture-title">
+            <div class="wrap">
+                <div class="module-heading">
+                    <p class="section-kicker">01 / Fundamentos</p>
+                    <h2 id="architecture-title">Arquitectura Desacoplada</h2>
+                    <p>Un diseño que separa las responsabilidades para que la experiencia del usuario y los servicios de datos evolucionen con menos dependencias entre sí.</p>
+                </div>
+                <div class="definition">
+                    <strong>Definición conceptual.</strong> La arquitectura desacoplada mantiene separada la capa de presentación (Frontend), responsable de la interfaz y la interacción, de la lógica de negocio y los datos (Backend). Ambas capas colaboran mediante contratos explícitos, en lugar de compartir una implementación interna.
+                </div>
+                <div class="flow" aria-label="El Frontend y el Backend intercambian solicitudes y respuestas mediante APIs">
+                    <article class="flow-node">
+                        <h3>Frontend</h3>
+                        <p>Presenta la información y gestiona la interacción. Puede construirse para web, móvil u otros clientes.</p>
+                    </article>
+                    <div class="flow-link"><strong>APIs</strong>RESTful / WebSockets</div>
+                    <article class="flow-node">
+                        <h3>Backend</h3>
+                        <p>Aplica reglas de negocio, valida solicitudes y consulta o actualiza los datos.</p>
+                    </article>
+                </div>
+                <div class="module-heading">
+                    <p class="section-kicker">Ventajas</p>
+                    <h2>Independencia con propósito</h2>
+                </div>
+                <div class="benefit-grid">
+                    <article class="benefit">
+                        <span class="benefit-index">01 / ESCALA</span>
+                        <h3>Escalabilidad horizontal independiente</h3>
+                        <p>Cada capa puede sumar instancias según su carga. Si aumentan las solicitudes de la API, se escala el backend sin replicar innecesariamente la interfaz.</p>
+                    </article>
+                    <article class="benefit">
+                        <span class="benefit-index">02 / TECNOLOGÍA</span>
+                        <h3>Flexibilidad tecnológica</h3>
+                        <p>El cliente y el servidor pueden usar frameworks y lenguajes distintos, siempre que respeten los contratos compartidos de la API.</p>
+                    </article>
+                    <article class="benefit">
+                        <span class="benefit-index">03 / ENTREGA</span>
+                        <h3>Despliegues continuos</h3>
+                        <p>Los componentes se publican por separado. Con versiones compatibles, despliegues graduales y comprobaciones de salud, es posible evitar una interrupción global.</p>
+                    </article>
+                    <article class="benefit">
+                        <span class="benefit-index">04 / RESILIENCIA</span>
+                        <h3>Tolerancia a fallos aislados</h3>
+                        <p>Los límites entre servicios ayudan a contener problemas y permiten mostrar estados alternativos cuando una dependencia no está disponible.</p>
+                    </article>
+                </div>
+                <div class="comparison">
+                    <h3>Desacoplada frente a monolítica</h3>
+                    <table class="compare-table">
+                        <thead><tr><th scope="col">Aspecto</th><th scope="col">Desacoplada</th><th scope="col">Monolítica tradicional</th></tr></thead>
+                        <tbody>
+                            <tr><th scope="row">Estructura</th><td>Presentación y servidor separados por APIs.</td><td>Interfaz y lógica suelen compartir una aplicación.</td></tr>
+                            <tr><th scope="row">Despliegue</th><td>Componentes publicables de forma independiente.</td><td>Los cambios suelen requerir publicar el conjunto.</td></tr>
+                            <tr><th scope="row">Escalado</th><td>Se dimensionan las capas según su demanda.</td><td>Puede ser necesario escalar más partes de la aplicación.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <h3>Explicación</h3>
-    <video controls width="500">
-        <source src="video/Explicacion.mp4" type="video/mp4">
-        Tu navegador no puede reproducir este video.
-    </video>
+        <section class="module" id="video" aria-labelledby="video-title">
+            <div class="wrap">
+                <div class="module-heading">
+                    <p class="section-kicker">02 / Recurso audiovisual</p>
+                    <h2 id="video-title">Video Explicativo</h2>
+                    <p>Una explicación audiovisual para reforzar cómo se comunican las capas y qué aporta su separación.</p>
+                </div>
+                <div class="video-shell">
+                    <video controls preload="metadata" aria-label="Video explicativo sobre arquitectura desacoplada">
+                        <source src="video/Explicacion.mp4" type="video/mp4">
+                        Tu navegador no puede reproducir este video.
+                    </video>
+                </div>
+                <p class="video-caption">Explicación sobre arquitectura desacoplada y comunicación mediante APIs.</p>
+            </div>
+        </section>
 
-    <section>
-        <h2>Prueba / Evaluación</h2>
-        <form>
-            <fieldset>
-                <legend>1. ¿Cómo se comunican el Frontend y el Backend en una arquitectura desacoplada?</legend>
-                <label><input type="radio" name="pregunta1" value="apis"> Mediante APIs</label><br>
-                <label><input type="radio" name="pregunta1" value="archivos"> Compartiendo los mismos archivos</label>
-            </fieldset>
-            <fieldset>
-                <legend>2. ¿Cuál es una ventaja de la arquitectura desacoplada?</legend>
-                <label><input type="radio" name="pregunta2" value="despliegue"> Independencia en el despliegue</label><br>
-                <label><input type="radio" name="pregunta2" value="dependencia"> Mayor dependencia entre capas</label>
-            </fieldset>
-        </form>
-    </section>
+        <section class="module" id="quiz" aria-labelledby="quiz-title">
+            <div class="wrap">
+                <div class="module-heading">
+                    <p class="section-kicker">03 / Comprueba lo aprendido</p>
+                    <h2 id="quiz-title">Quiz Interactivo</h2>
+                    <p class="quiz-intro">Seis preguntas sobre los conceptos de arquitectura desacoplada y los temas de la explicación. Selecciona una opción por pregunta y revisa tu resultado.</p>
+                </div>
+                <div class="quiz-topline"><span id="question-count">6 preguntas</span><span id="answer-count">0 de 6 respondidas</span></div>
+                <div class="progress-track" role="progressbar" aria-label="Progreso del quiz" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="progress-value" id="progress-value"></div></div>
+                <form id="quiz-form"></form>
+                <div class="quiz-actions">
+                    <button class="button" id="check-answers" type="submit" form="quiz-form">Revisar respuestas</button>
+                    <button class="button button-secondary" id="restart-quiz" type="button" hidden>Intentar de nuevo</button>
+                    <p class="quiz-result" id="quiz-result" aria-live="polite"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap footer-inner"><span>Christian Serrano · Ingeniería de Software</span><span>Arquitectura Desacoplada</span></div>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                topic: "Conceptos y video",
+                prompt: "¿Qué responsabilidad corresponde principalmente al Frontend?",
+                options: ["Gestionar la interfaz y la interacción del usuario", "Administrar directamente la base de datos", "Definir todas las reglas del servidor", "Reemplazar las APIs"],
+                answer: 0,
+                explanation: "El Frontend presenta la interfaz y gestiona la interacción; el Backend aplica las reglas de negocio y trabaja con los datos."
+            },
+            {
+                topic: "Comunicación entre capas",
+                prompt: "¿Qué mecanismo permite intercambiar solicitudes y datos entre Frontend y Backend?",
+                options: ["Una hoja de estilos compartida", "Una API con un contrato definido", "Una imagen del servidor", "Un único archivo HTML"],
+                answer: 1,
+                explanation: "Las APIs definen cómo se solicitan y se entregan los datos entre los componentes independientes."
+            },
+            {
+                topic: "APIs RESTful y WebSockets",
+                prompt: "¿Cuándo resulta especialmente útil una conexión WebSocket?",
+                options: ["Al compartir únicamente estilos visuales", "Al necesitar comunicación continua y bidireccional", "Al evitar toda comunicación con el servidor", "Al compilar una página HTML estática"],
+                answer: 1,
+                explanation: "WebSockets mantienen un canal bidireccional, útil para actualizaciones en tiempo real."
+            },
+            {
+                topic: "Escalabilidad",
+                prompt: "¿Qué describe la escalabilidad horizontal independiente?",
+                options: ["Aumentar instancias de la capa que necesita capacidad", "Duplicar siempre el sistema completo", "Combinar Frontend y Backend en un solo proceso", "Reducir el número de solicitudes mediante CSS"],
+                answer: 0,
+                explanation: "Cada componente puede escalar de acuerdo con su demanda, sin replicar necesariamente el resto."
+            },
+            {
+                topic: "Despliegues",
+                prompt: "¿Qué práctica ayuda a publicar cambios sin una interrupción global?",
+                options: ["Desplegar todas las capas a la vez y sin verificaciones", "Usar despliegues graduales y contratos compatibles", "Eliminar las versiones anteriores antes de probar", "Desactivar la API durante cada publicación"],
+                answer: 1,
+                explanation: "Los despliegues graduales, las comprobaciones de salud y la compatibilidad entre versiones reducen el tiempo de inactividad."
+            },
+            {
+                topic: "Resiliencia y arquitectura",
+                prompt: "¿Cuál es una diferencia habitual frente a una arquitectura monolítica?",
+                options: ["La desacoplada permite desplegar componentes por separado", "La monolítica siempre usa WebSockets", "La desacoplada no necesita Backend", "La monolítica escala cada capa de forma independiente"],
+                answer: 0,
+                explanation: "La separación permite publicar y escalar componentes de forma independiente; en un monolito suelen estar más estrechamente integrados."
+            }
+        ];
+
+        const quizForm = document.querySelector("#quiz-form");
+        const progress = document.querySelector("#progress-value");
+        const progressTrack = document.querySelector(".progress-track");
+        const answerCount = document.querySelector("#answer-count");
+        const result = document.querySelector("#quiz-result");
+        const checkButton = document.querySelector("#check-answers");
+        const restartButton = document.querySelector("#restart-quiz");
+        let isReviewed = false;
+
+        function renderQuiz() {
+            quizForm.innerHTML = questions.map((question, questionIndex) => `
+                <fieldset class="quiz-question" data-question="${questionIndex}">
+                    <legend class="question-meta">Pregunta ${String(questionIndex + 1).padStart(2, "0")} / ${question.topic}</legend>
+                    <h3>${question.prompt}</h3>
+                    <div class="answer-grid">
+                        ${question.options.map((option, optionIndex) => `
+                            <label class="answer-option">
+                                <input type="radio" name="question-${questionIndex}" value="${optionIndex}" required>
+                                <span class="answer-letter">${String.fromCharCode(65 + optionIndex)}</span>
+                                <span>${option}</span>
+                            </label>
+                        `).join("")}
+                    </div>
+                    <p class="question-feedback" aria-live="polite"></p>
+                </fieldset>
+            `).join("");
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const answered = questions.reduce((total, _, index) => total + (quizForm.querySelector(`input[name="question-${index}"]:checked`) ? 1 : 0), 0);
+            answerCount.textContent = `${answered} de ${questions.length} respondidas`;
+            progress.style.width = `${(answered / questions.length) * 100}%`;
+            progressTrack.setAttribute("aria-valuenow", String(answered));
+        }
+
+        quizForm.addEventListener("change", updateProgress);
+        quizForm.addEventListener("submit", event => {
+            event.preventDefault();
+            if (isReviewed || !quizForm.reportValidity()) return;
+
+            const formData = new FormData(quizForm);
+            let score = 0;
+            questions.forEach((question, questionIndex) => {
+                const selected = Number(formData.get(`question-${questionIndex}`));
+                const fieldset = quizForm.querySelector(`[data-question="${questionIndex}"]`);
+                const feedback = fieldset.querySelector(".question-feedback");
+                const selectedLabel = fieldset.querySelector(`input[value="${selected}"]`).closest(".answer-option");
+                const correctLabel = fieldset.querySelector(`input[value="${question.answer}"]`).closest(".answer-option");
+
+                if (selected === question.answer) {
+                    score += 1;
+                    selectedLabel.classList.add("is-correct");
+                    feedback.textContent = `Correcta. ${question.explanation}`;
+                } else {
+                    selectedLabel.classList.add("is-incorrect");
+                    correctLabel.classList.add("is-correct");
+                    feedback.textContent = `La respuesta correcta es ${String.fromCharCode(65 + question.answer)}. ${question.explanation}`;
+                }
+                feedback.classList.add("visible");
+            });
+
+            isReviewed = true;
+            quizForm.querySelectorAll("input").forEach(input => { input.disabled = true; });
+            checkButton.disabled = true;
+            restartButton.hidden = false;
+            result.innerHTML = `<strong>Resultado: ${score} de ${questions.length}.</strong> ${score === questions.length ? "Dominio excelente." : "Revisa las explicaciones y vuelve a intentarlo."}`;
+        });
+
+        restartButton.addEventListener("click", () => {
+            isReviewed = false;
+            result.textContent = "";
+            checkButton.disabled = false;
+            restartButton.hidden = true;
+            renderQuiz();
+        });
+
+        renderQuiz();
+    </script>
 </body>
 </html>
