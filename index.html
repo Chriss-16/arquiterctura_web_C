@@ -3,171 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0b1020">
-    <meta name="description" content="Descubre la arquitectura desacoplada: cómo se conectan el frontend y el backend mediante APIs, sus ventajas y un quiz interactivo.">
-    <title>Arquitectura desacoplada | Una guía interactiva</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Información Personal y Arquitectura Desacoplada</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --background: #050505;
+            --surface: #101010;
+            --text: #f7f7f7;
+            --muted: #c2c2c2;
+            --line: #454545;
+            --glow: 0 0 8px rgba(255, 255, 255, .55);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 24px;
+            background: var(--background);
+            color: var(--text);
+            font-family: "Avenir Next", "Segoe UI", sans-serif;
+            line-height: 1.65;
+        }
+
+        h2, h3 {
+            color: #fff;
+            text-shadow: var(--glow);
+        }
+
+        body > h2:first-child {
+            margin-bottom: 24px;
+            font-size: 2rem;
+        }
+
+        img {
+            display: block;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 28px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 16px rgba(255, 255, 255, .3);
+            object-fit: cover;
+        }
+
+        table {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-collapse: collapse;
+            background: var(--surface);
+        }
+
+        th, td {
+            padding: 12px 14px;
+            border: 1px solid var(--line);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th { width: 28%; color: #fff; }
+        td { color: var(--muted); }
+
+        section {
+            margin-top: 40px;
+            padding: 22px 24px;
+            border: 1px solid var(--line);
+            border-left: 3px solid #fff;
+            border-radius: 4px;
+            background: var(--surface);
+        }
+
+        section h2 { margin-top: 0; }
+        li::marker { color: #fff; }
+
+        video {
+            display: block;
+            max-width: 100%;
+            border: 1px solid #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 14px rgba(255, 255, 255, .2);
+        }
+
+        fieldset {
+            margin: 16px 0;
+            padding: 16px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+        }
+
+        legend { padding: 0 6px; color: #fff; }
+        label { display: inline-block; padding: 5px 0; color: var(--muted); cursor: pointer; }
+        input[type="radio"] { accent-color: #fff; }
+        :focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+        @media (max-width: 560px) {
+            body { padding: 30px 16px; }
+            th, td { padding: 10px; }
+            th { width: 35%; }
+            section { padding: 18px; }
+        }
+    </style>
 </head>
 <body>
-    <header class="site-header">
-        <nav class="container nav-wrap" aria-label="Navegación principal">
-            <a class="brand" href="#inicio" aria-label="Arquitectura desacoplada, inicio">
-                <span class="brand-mark" aria-hidden="true">⟷</span>
-                <span>Decoupled<span class="brand-dot">.</span></span>
-            </a>
-            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menú</button>
-            <div class="nav-links" id="nav-links">
-                <a href="#concepto">Concepto</a>
-                <a href="#ventajas">Ventajas</a>
-                <a href="#video">Video</a>
-                <a href="#quiz">Quiz</a>
-                <a href="#autor">Autor</a>
-            </div>
-        </nav>
-    </header>
+    <h2>Información Personal</h2>
+    <img src="img/perrin.jpg" alt="Foto de perfil">
 
-    <main>
-        <section class="hero" id="inicio">
-            <div class="container hero-grid">
-                <div>
-                    <span class="eyebrow">Una arquitectura. Más posibilidades.</span>
-                    <h1>Frontend y backend, <span>libres para evolucionar.</span></h1>
-                    <p class="hero-copy">La arquitectura desacoplada separa la experiencia que ve el usuario de los servicios que la hacen posible. Ambos se conectan mediante APIs: menos dependencias, más opciones.</p>
-                    <div class="actions">
-                        <a class="button" href="#concepto">Explorar el concepto <span aria-hidden="true">&nbsp;→</span></a>
-                        <a class="button button-secondary" href="#quiz">Ponerme a prueba</a>
-                    </div>
-                </div>
-                <div class="architecture-card" role="img" aria-label="Diagrama: el frontend se comunica con el backend mediante una API y entrega contenido a varios canales">
-                    <p class="diagram-label">Una conexión, diferentes experiencias</p>
-                    <div class="diagram-stack">
-                        <div class="diagram-node">
-                            <span class="node-icon" aria-hidden="true">◈</span>
-                            <span><strong>Frontend</strong><small>Interfaz y experiencia de usuario</small></span>
-                        </div>
-                        <div class="connector">solicitudes y respuestas</div>
-                        <div class="diagram-node api-node">
-                            <span class="node-icon" aria-hidden="true">⟷</span>
-                            <span><strong>API</strong><small>El puente entre las dos capas</small></span>
-                        </div>
-                        <div class="connector">datos y servicios</div>
-                        <div class="diagram-node">
-                            <span class="node-icon" aria-hidden="true">▤</span>
-                            <span><strong>Backend</strong><small>Contenido, reglas y datos</small></span>
-                        </div>
-                        <div class="channels" aria-label="Canales de publicación">
-                            <span class="channel">Web</span><span class="channel">Móvil</span><span class="channel">Otros canales</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <table border="1">
+        <tr>
+            <th>Nombre</th>
+            <td>Christian</td>
+        </tr>
+        <tr>
+            <th>Apellido</th>
+            <td>Serrano</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>criserrano443@gmail.com</td>
+        </tr>
+        <tr>
+            <th>Dirección</th>
+            <td>Cotopaxi</td>
+        </tr>
+        <tr>
+            <th>Acerca de mí</th>
+            <td>Estudiante de Ingeniería de Software, amante de los videojuegos.</td>
+        </tr>
+    </table>
 
-        <section id="concepto">
-            <div class="container">
-                <div class="section-heading">
-                    <span class="eyebrow">01 / El concepto</span>
-                    <h2>¿Qué significa estar desacoplado?</h2>
-                    <p>En una arquitectura tradicional, la presentación y la lógica del servidor suelen estar estrechamente conectadas. Al desacoplarlas, cada capa puede desarrollarse y desplegarse de forma independiente.</p>
-                </div>
-                <div class="intro-grid">
-                    <article class="info-card">
-                        <span class="card-icon" aria-hidden="true">◉</span>
-                        <h3>Frontend independiente</h3>
-                        <p>La capa de presentación construye la interfaz y solicita información cuando la necesita. Puede adaptarse a distintos dispositivos y evolucionar sin rehacer el backend.</p>
-                    </article>
-                    <article class="info-card">
-                        <span class="card-icon" aria-hidden="true">⌘</span>
-                        <h3>Backend conectado por APIs</h3>
-                        <p>El backend gestiona datos, contenido y reglas de negocio; expone servicios mediante APIs para que uno o varios clientes puedan consumirlos.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
+    <section>
+        <h2>Arquitectura Desacoplada</h2>
+        <p><strong>Definición:</strong> Separación completa entre el Frontend (la interfaz de usuario) y el Backend (la lógica de servidor y base de datos), comunicándose mediante APIs.</p>
+        <p><strong>Ventajas principales:</strong></p>
+        <ul>
+            <li>Mayor escalabilidad</li>
+            <li>Independencia en el despliegue</li>
+            <li>Flexibilidad tecnológica</li>
+            <li>Mejor rendimiento</li>
+        </ul>
+    </section>
 
-        <section id="ventajas">
-            <div class="container">
-                <div class="section-heading">
-                    <span class="eyebrow">02 / ¿Por qué elegirla?</span>
-                    <h2>Ventajas de separar las capas</h2>
-                    <p>Al definir responsabilidades claras y una comunicación basada en APIs, los equipos ganan flexibilidad sin perder de vista la coordinación.</p>
-                </div>
-                <div class="benefit-grid">
-                    <article class="benefit-card">
-                        <span class="card-icon" aria-hidden="true">↗</span>
-                        <h3>Escalabilidad</h3>
-                        <p>Escala cada parte según sus necesidades, sin replicar toda la aplicación.</p>
-                    </article>
-                    <article class="benefit-card">
-                        <span class="card-icon" aria-hidden="true">⌘</span>
-                        <h3>Flexibilidad tecnológica</h3>
-                        <p>Elige herramientas distintas para la interfaz y los servicios del servidor.</p>
-                    </article>
-                    <article class="benefit-card">
-                        <span class="card-icon" aria-hidden="true">▣</span>
-                        <h3>Omnicanalidad</h3>
-                        <p>Un mismo backend puede entregar contenido a la web, una app móvil y más canales.</p>
-                    </article>
-                    <article class="benefit-card">
-                        <span class="card-icon" aria-hidden="true">⚡</span>
-                        <h3>Desarrollo en paralelo</h3>
-                        <p>Los equipos pueden avanzar de manera independiente si acuerdan los contratos de API.</p>
-                    </article>
-                    <article class="benefit-card">
-                        <span class="card-icon" aria-hidden="true">⟳</span>
-                        <h3>Mantenimiento</h3>
-                        <p>Los cambios localizados son más sencillos cuando las responsabilidades están separadas.</p>
-                    </article>
-                    <article class="benefit-card">
-                        <span class="card-icon" aria-hidden="true">◇</span>
-                        <h3>Experiencias a medida</h3>
-                        <p>Diseña interfaces distintas para cada audiencia sin duplicar la gestión de datos.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
+    <h3>Explicación</h3>
+    <video controls width="500">
+        <source src="video/Explicacion.mp4" type="video/mp4">
+        Tu navegador no puede reproducir este video.
+    </video>
 
-        <section class="video-section" id="video">
-            <div class="container">
-                <!DOCTYPE html>
-                <html lang="es">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Información Personal</title>
-                </head>
-                <body>
-                    <h2>Información Personal</h2>
-                    <img src="img/perrin.jpg" alt="Foto de perfil">
-
-                    <table border="1">
-                        <tr>
-                            <th>Nombre</th>
-                            <td>Christian</td>
-                        </tr>
-                        <tr>
-                            <th>Apellido</th>
-                            <td>Serrano</td>
-                        </tr>
-                        <tr>
-                            <th>Email</th>
-                            <td>criserrano443@gmail.com</td>
-                        </tr>
-                        <tr>
-                            <th>Dirección</th>
-                            <td>Cotopaxi</td>
-                        </tr>
-                        <tr>
-                            <th>Acerca de mí</th>
-                            <td>Estudiante de Ingeniería de Software, amante de los videojuegos</td>
-                        </tr>
-                    </table>
-
-                    <h3>Explicación</h3>
-                    <video controls width="500">
-                        <source src="video/Explicacion.mp4" type="video/mp4">
-                        Tu navegador no puede reproducir este video.
-                    </video>
-                </body>
-                </html>
-                    <h2>Sobre el autor</h2>
+    <section>
+        <h2>Prueba / Evaluación</h2>
+        <form>
+            <fieldset>
+                <legend>1. ¿Cómo se comunican el Frontend y el Backend en una arquitectura desacoplada?</legend>
+                <label><input type="radio" name="pregunta1" value="apis"> Mediante APIs</label><br>
+                <label><input type="radio" name="pregunta1" value="archivos"> Compartiendo los mismos archivos</label>
+            </fieldset>
+            <fieldset>
+                <legend>2. ¿Cuál es una ventaja de la arquitectura desacoplada?</legend>
+                <label><input type="radio" name="pregunta2" value="despliegue"> Independencia en el despliegue</label><br>
+                <label><input type="radio" name="pregunta2" value="dependencia"> Mayor dependencia entre capas</label>
+            </fieldset>
+        </form>
+    </section>
+</body>
+</html>
